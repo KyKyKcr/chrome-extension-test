@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>arXiv Meta</title>
+  <style>
+    body {
+      width: 350px; /* ポップアップの幅を指定 */
+      font-family: sans-serif;
+      font-size: 14px;
+    }
+    h3 {
+      font-size: 16px;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    div {
+      margin-bottom: 10px;
+    }
+    strong {
+      display: block;
+      color: #333;
+    }
+    #authors {
+      white-space: normal; /* 著者名が長い場合に折り返す */
+    }
+    #error {
+        color: red;
+    }
+  </style>
+</head>
+<body>
+  <h3>arXiv Metadata</h3>
+  <div id="content">
+    <div>
+      <strong>Title:</strong>
+      <span id="title">Loading...</span>
+    </div>
+    <div>
+      <strong>Authors:</strong>
+      <span id="authors">Loading...</span>
+    </div>
+    <div>
+      <strong>Abstract:</strong>
+      <p id="abstract" style="max-height: 150px; overflow-y: auto; border: 1px solid #ccc; padding: 5px;">Loading...</p>
+    </div>
+  </div>
+  <div id="error" style="display: none;">
+      This does not seem to be an arXiv abstract page.
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
