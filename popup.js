@@ -19,14 +19,14 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         const metadata = injectionResults[0].result;
         
         if (metadata && metadata.title) {
-          // 取得したメタデータをポップアップに表示
-          document.getElementById('title').textContent = metadata.title;
-          document.getElementById('authors').textContent = metadata.authors;
-          document.getElementById('abstract').textContent = metadata.abstract;
-          
-          document.getElementById('content').style.display = 'block';
-          document.getElementById('error').style.display = 'none';
+            document.getElementById('title').textContent = metadata.title;
+            document.getElementById('author').textContent = metadata.author;
+            document.getElementById('date').textContent = metadata.date;
+            document.getElementById('subject').textContent = metadata.subject;
+            document.getElementById('abstract').textContent = metadata.abs;
 
+            document.getElementById('content').style.display = 'block';
+            document.getElementById('error').style.display = 'none';
         } else {
             // arXivページだが、必要な要素が見つからなかった場合
             showError();
@@ -38,25 +38,26 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
   }
 });
 
-/**
- * この関数はブラウザのページコンテキストで実行され、
- * DOMからメタデータを抽出して返す。
- */
+
 function scrapeArxivMeta() {
   try {
-    // 各要素のセレクタを使って情報を取得
-    const title = document.querySelector('h1.title').innerText.replace('Title:', '').trim();
+    const authorElements = document.querySelectorAll('meta[name="citation_author"]');
+    const authors = Array.from(authorElements).map(el => el.content).join(', ');
     
-    // 著者名は複数のaタグに入っているので、全て取得して結合する
-    const authorElements = document.querySelectorAll('div.authors a');
-    const authors = Array.from(authorElements).map(a => a.innerText).join(', ');
-    
-    const abstract = document.querySelector('blockquote.abstract').innerText.replace('Abstract:', '').trim();
+    const meta = {    
+        title: document.querySelector('meta[name="citation_title"]')?.content || document.title,
+        url: document.querySelector('link[rel="canonical"]')?.href || location.href,
+        date: document.querySelector('meta[name="citation_online_date"]')?.content || "",
+        author: authors,
+        subject: document.querySelector('.primary-subject')?.textContent || "",
+        abs: document.querySelector('meta[name="citation_abstract"]')?.content || ""
+    };
 
     // 取得した情報をオブジェクトとして返す
-    return { title, authors, abstract };
+    return meta
   } catch (e) {
     // ページに必要な要素がなかった場合 (例: arXivのトップページなど)
+    console.error("Error scraping arXiv metadata:", e);
     return null;
   }
 }
