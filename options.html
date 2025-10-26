@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notion連携設定</title>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: sans-serif; padding: 10px; min-width: 300px; }
+    div { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 5px; font-weight: bold; }
+    input[type="text"], input[type="password"] { width: 100%; padding: 8px; box-sizing: border-box; }
+    button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+    #status { margin-top: 10px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Notion連携設定</h2>
+  
+  <div>
+    <label for="apiKey">Notion APIキー:</label>
+    <input type="password" id="apiKey">
+  </div>
+  
+  <div>
+    <label for="dbId">データベースID:</label>
+    <input type="text" id="dbId">
+  </div>
+  
+  <button id="save">保存</button>
+  <div id="status"></div>
+  
+  <script src="options.js"></script>
+</body>
+</html>

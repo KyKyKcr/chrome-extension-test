@@ -1,11 +1,15 @@
 {
     "manifest_version": 3,
-    "name": "arxiv-test",
+    "name": "arxiv-notion-test",
     "version": "0.1.0",
     "description": "A Chrome extension for testing arXiv DOM analysis",
-    "permissions": ["activeTab", "scripting"],
-    "host_permissions": ["https://arxiv.org/abs/*"],
+    "permissions": ["activeTab", "scripting","storage"],
+    "host_permissions": ["https://arxiv.org/abs/*","https://api.notion.com/"],
     "action": {
         "default_popup": "popup.html"
-    }
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "options_page": "options.html"
 }
